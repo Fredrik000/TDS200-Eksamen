@@ -1,5 +1,7 @@
 export default {
-  white: '#E8EAED',
+  primary: '#87a96b',
+  accent: '#6b87a9',
+  background: '#E8EAED',
   gray: 'gray',
   danger: 'maroon',
 };

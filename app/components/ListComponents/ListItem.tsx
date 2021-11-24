@@ -14,7 +14,7 @@ interface Props {
 const ListItem = ({ title, renderRightActions }: Props) => {
   return (
     <Swipeable renderRightActions={renderRightActions}>
-      <View style={[styles.row, styles.container]}>
+      <View style={[styles.container]}>
         {/* insert img here */}
         <View>
           <Text style={[styles.text, styles.title]}>{title}</Text>
@@ -25,11 +25,23 @@ const ListItem = ({ title, renderRightActions }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row' },
-  container: { margin: 10 },
+  container: {
+    backgroundColor: colors.accent,
+    padding: 15,
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    shadowColor: 'black',
+    shadowOpacity: 0.26,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 10,
+    elevation: 3,
+  },
   title: { fontWeight: '600' },
   text: {
-    color: colors.gray,
+    color: 'white',
     textTransform: 'capitalize',
     marginLeft: 10,
     fontSize: 16,
