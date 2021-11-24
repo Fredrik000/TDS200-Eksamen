@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { FlatList, View, StyleSheet, Text } from 'react-native';
 import colors from '../config/colors';
 import { ListItem, ListItemDelete } from '../components/ListComponents';
-import { ICharacter } from '../interfaces/ICharacter';
 import { RickAndMortyContext } from '../contexts/RickAndMortyContext';
 import { RickAndMortyContextType } from '../types/RickAndMortyContextType';
 
