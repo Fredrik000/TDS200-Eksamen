@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import {
   GestureResponderEvent,
   StyleSheet,
   TouchableWithoutFeedback,
   View,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import colors from "../../config/colors";
+} from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import colors from '../../config/colors';
 
 type Props = {
   onPress?: (event: GestureResponderEvent) => void;
@@ -17,9 +17,9 @@ export default function ListItemDelete({ onPress }: Props) {
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.container}>
         <MaterialCommunityIcons
-          name="pokeball"
-          color={colors.white}
-          size={30}
+          name='trash-can-outline'
+          color={colors.danger}
+          size={40}
         />
       </View>
     </TouchableWithoutFeedback>
@@ -29,8 +29,8 @@ export default function ListItemDelete({ onPress }: Props) {
 const styles = StyleSheet.create({
   container: {
     width: 70,
-    backgroundColor: colors.danger,
-    justifyContent: "center",
-    alignItems: "center",
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
