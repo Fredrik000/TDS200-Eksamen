@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import colors from './app/config/colors';
 import { RickAndMortyProvider } from './app/contexts/RickAndMortyContext';
 

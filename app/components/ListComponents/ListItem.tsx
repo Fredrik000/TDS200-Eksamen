@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, StyleSheet, Text, View, Image } from 'react-native';
 import { Swipeable } from 'react-native-gesture-handler';
 import colors from '../../config/colors';
 
@@ -9,15 +9,18 @@ interface Props {
     dragAnimatedValue: Animated.AnimatedInterpolation
   ) => React.ReactNode;
   title: string;
+  subtitle: string;
+  imageUri?: string;
 }
 
-const ListItem = ({ title, renderRightActions }: Props) => {
+const ListItem = ({ title, subtitle, imageUri, renderRightActions }: Props) => {
   return (
     <Swipeable renderRightActions={renderRightActions}>
       <View style={[styles.container]}>
-        {/* insert img here */}
+        {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
         <View>
           <Text style={[styles.text, styles.title]}>{title}</Text>
+          <Text style={[styles.text]}>{subtitle}</Text>
         </View>
       </View>
     </Swipeable>
@@ -27,11 +30,10 @@ const ListItem = ({ title, renderRightActions }: Props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.accent,
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: 20,
     shadowColor: 'black',
     shadowOpacity: 0.26,
@@ -39,12 +41,16 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 3,
   },
-  title: { fontWeight: '600' },
+  title: { fontWeight: '600', marginBottom: 5 },
   text: {
     color: 'white',
     textTransform: 'capitalize',
-    marginLeft: 10,
+    marginLeft: 20,
     fontSize: 16,
+  },
+  image: {
+    width: 50,
+    height: 50,
   },
 });
 

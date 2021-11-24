@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { FlatList, View, StyleSheet, Text } from 'react-native';
 import colors from '../config/colors';
 import { ListItem, ListItemDelete } from '../components/ListComponents';
@@ -6,9 +6,8 @@ import { RickAndMortyContext } from '../contexts/RickAndMortyContext';
 import { RickAndMortyContextType } from '../types/RickAndMortyContextType';
 
 const ListScreen = () => {
-  const { characters, deleteCharacter } = useContext(
-    RickAndMortyContext
-  ) as RickAndMortyContextType;
+  const { characters, loading, getCharactersFromService, deleteCharacter } =
+    useContext(RickAndMortyContext) as RickAndMortyContextType;
 
   return (
     <View style={styles.container}>
@@ -18,10 +17,14 @@ const ListScreen = () => {
         </View>
         <FlatList
           data={characters}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item, index }) => (
+          keyExtractor={(item) => item.id.toString()}
+          refreshing={loading}
+          onRefresh={getCharactersFromService}
+          renderItem={({ item }) => (
             <ListItem
               title={item.name}
+              subtitle={item.species}
+              imageUri={item.image}
               renderRightActions={() => (
                 <ListItemDelete onPress={() => deleteCharacter(item.id)} />
               )}
