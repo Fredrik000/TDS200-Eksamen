@@ -30,7 +30,12 @@ export const RickAndMortyProvider: FC = ({ children }) => {
 
   return (
     <RickAndMortyContext.Provider
-      value={{ characters, loading, getCharactersFromService, deleteCharacter }}
+      value={{
+        characters,
+        loading,
+        getCharactersFromService,
+        deleteCharacter,
+      }}
     >
       {children}
     </RickAndMortyContext.Provider>
