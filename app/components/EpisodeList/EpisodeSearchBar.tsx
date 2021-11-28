@@ -2,16 +2,11 @@ import React, { useState, useContext, Dispatch, SetStateAction } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import colors from '../../config/colors';
-import { ICharacter } from '../../interfaces/ICharacter';
 import { RickAndMortyContext } from '../../contexts/RickAndMortyContext';
 import { RickAndMortyContextType } from '../../types/RickAndMortyContextType';
 
-interface Props {
-  setFilteredCharacters: Dispatch<SetStateAction<ICharacter[]>>;
-}
-
-const SearchBar = ({ setFilteredCharacters }: Props) => {
-  const { characters, loading } = useContext(
+const SearchBar = () => {
+  const { episodes, loading, setFilteredEpisodes } = useContext(
     RickAndMortyContext
   ) as RickAndMortyContextType;
 
@@ -19,15 +14,15 @@ const SearchBar = ({ setFilteredCharacters }: Props) => {
 
   const searchFilter = (text: string) => {
     if (text) {
-      const newCharactersArr = characters.filter((item) => {
+      const newEpisodesArr = episodes.filter((item) => {
         const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
-      setFilteredCharacters(newCharactersArr);
+      setFilteredEpisodes(newEpisodesArr);
       setSearch(text);
     } else {
-      setFilteredCharacters(characters);
+      setFilteredEpisodes(episodes);
       setSearch(text);
     }
   };

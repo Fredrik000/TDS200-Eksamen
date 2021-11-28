@@ -3,14 +3,14 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import colors from './app/config/colors';
 import { RickAndMortyProvider } from './app/contexts/RickAndMortyContext';
 import { NavigationContainer } from '@react-navigation/native';
-import CharacterNavigator from './app/navigation/CharacterNavigator';
+import TabNavigator from './app/navigation/TabNavigator';
 
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
         <RickAndMortyProvider>
-          <CharacterNavigator />
+          <TabNavigator />
         </RickAndMortyProvider>
       </NavigationContainer>
     </SafeAreaView>

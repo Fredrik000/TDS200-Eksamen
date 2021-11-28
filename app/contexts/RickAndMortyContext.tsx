@@ -1,5 +1,6 @@
 import React, { FC, createContext, useState, useEffect } from 'react';
 import { ICharacter } from '../interfaces/ICharacter';
+import { IEpisode } from '../interfaces/IEpisode';
 import { RickAndMortyContextType } from '../types/RickAndMortyContextType';
 import { rickAndMortyService } from '../services/rickAndMortyService';
 
@@ -8,33 +9,63 @@ export const RickAndMortyContext =
 
 export const RickAndMortyProvider: FC = ({ children }) => {
   const [characters, setCharacters] = useState<ICharacter[]>([]);
+  const [filteredCharacters, setFilteredCharacters] = useState<ICharacter[]>(
+    []
+  );
+  const [episodes, setEpisodes] = useState<IEpisode[]>([]);
+  const [filteredEpisodes, setFilteredEpisodes] = useState<IEpisode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     getCharactersFromService();
+    getEpisodesFromService();
   }, []);
 
   // GET all characters from service
   const getCharactersFromService = async () => {
     setLoading(true);
-    const results = await rickAndMortyService.getAll();
+    const results = await rickAndMortyService.getAllCharacters();
     setCharacters(results);
+    setFilteredCharacters(results);
     setLoading(false);
   };
 
   // DELETE a single character from context
   const deleteCharacter = (id: number) => {
-    setCharacters(characters?.filter((p) => p.id != id));
+    // setCharacters(characters?.filter((p) => p.id != id));
+    setFilteredCharacters(filteredCharacters?.filter((p) => p.id != id));
+  };
+
+  // GET all episodes from service
+  const getEpisodesFromService = async () => {
+    setLoading(true);
+    const results = await rickAndMortyService.getAllEpisodes();
+    setEpisodes(results);
+    setFilteredEpisodes(results);
+    setLoading(false);
+  };
+
+  // DELETE a single episode from context
+  const deleteEpisode = (id: number) => {
+    // setEpisodes(episodes?.filter((p) => p.id != id));
+    setFilteredEpisodes(filteredEpisodes?.filter((p) => p.id != id));
   };
 
   return (
     <RickAndMortyContext.Provider
       value={{
-        characters,
         loading,
+        characters,
         getCharactersFromService,
         deleteCharacter,
+        filteredCharacters,
+        setFilteredCharacters,
+        episodes,
+        getEpisodesFromService,
+        deleteEpisode,
+        filteredEpisodes,
+        setFilteredEpisodes,
       }}
     >
       {children}

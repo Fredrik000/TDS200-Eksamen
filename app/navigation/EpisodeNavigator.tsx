@@ -1,21 +1,20 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { CharacterListScreen, CharacterDetailsScreen } from '../screens';
+import { EpisodeListScreen, EpisodeDetailsScreen } from '../screens';
 import colors from '../config/colors';
 
-export type RootCharacterParamList = {
-  CharacterList: undefined;
-  CharacterDetails: { charId: number; charName: string };
+export type RootEpisodeParamList = {
+  EpisodeList: undefined;
+  EpisodeDetails: { epId: number; epName: string };
 };
 
 export default function CharacterNavigator() {
-  const Stack = createNativeStackNavigator<RootCharacterParamList>();
-
+  const Stack = createNativeStackNavigator<RootEpisodeParamList>();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='CharacterList'
-        component={CharacterListScreen}
+        name='EpisodeList'
+        component={EpisodeListScreen}
         options={{
           title: 'The Rick and Morty App!',
           headerStyle: {
@@ -29,10 +28,10 @@ export default function CharacterNavigator() {
         }}
       />
       <Stack.Screen
-        name='CharacterDetails'
-        component={CharacterDetailsScreen}
+        name='EpisodeDetails'
+        component={EpisodeDetailsScreen}
         options={({ route }) => ({
-          title: route.params.charName,
+          title: route.params.epName,
           headerStyle: {
             backgroundColor: colors.background,
           },

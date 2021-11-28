@@ -1,51 +1,47 @@
 import React, { useContext, useState } from 'react';
 import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
 import {
-  CharacterListItem,
-  CharacterListItemDelete,
-  CharacterSearchBar,
-} from '../components/CharacterList';
+  EpisodeListItem,
+  EpisodeListItemDelete,
+  EpisodeSearchBar,
+} from '../components/EpisodeList';
 import { RickAndMortyContext } from '../contexts/RickAndMortyContext';
 import { RickAndMortyContextType } from '../types/RickAndMortyContextType';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootCharacterParamList } from '../navigation/CharacterNavigator';
+import { RootEpisodeParamList } from '../navigation/EpisodeNavigator';
 import colors from '../config/colors';
+import { IEpisode } from '../interfaces/IEpisode';
 
-const CharacterListScreen = ({
+const EpisodeListScreen = ({
   navigation,
-}: NativeStackScreenProps<RootCharacterParamList, 'CharacterList'>) => {
-  const {
-    loading,
-    getCharactersFromService,
-    deleteCharacter,
-    filteredCharacters,
-  } = useContext(RickAndMortyContext) as RickAndMortyContextType;
+}: NativeStackScreenProps<RootEpisodeParamList, 'EpisodeList'>) => {
+  const { loading, getEpisodesFromService, deleteEpisode, filteredEpisodes } =
+    useContext(RickAndMortyContext) as RickAndMortyContextType;
 
   return (
     <View style={styles.container}>
-      <CharacterSearchBar />
+      <EpisodeSearchBar />
       <View style={styles.listWrapper}>
         <FlatList
-          data={filteredCharacters}
+          data={filteredEpisodes}
           keyExtractor={(item) => item.id.toString()}
           refreshing={loading}
-          onRefresh={getCharactersFromService}
+          onRefresh={getEpisodesFromService}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() =>
-                navigation.navigate('CharacterDetails', {
-                  charId: item.id,
-                  charName: item.name,
+                navigation.navigate('EpisodeDetails', {
+                  epId: item.id,
+                  epName: item.name,
                 })
               }
             >
-              <CharacterListItem
+              <EpisodeListItem
                 title={item.name}
-                subtitle={item.species}
-                imageUri={item.image}
+                subtitle={item.episode}
                 renderRightActions={() => (
-                  <CharacterListItemDelete
-                    onPress={() => deleteCharacter(item.id)}
+                  <EpisodeListItemDelete
+                    onPress={() => deleteEpisode(item.id)}
                   />
                 )}
               />
@@ -68,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CharacterListScreen;
+export default EpisodeListScreen;

@@ -1,3 +1,3 @@
-export { default as ListItem } from './CharacterListItem';
-export { default as ListItemDelete } from './CharacterListItemDelete';
-export { default as SearchBar } from './SearchBar';
+export { default as CharacterListItem } from './CharacterListItem';
+export { default as CharacterListItemDelete } from './CharacterListItemDelete';
+export { default as CharacterSearchBar } from './CharacterSearchBar';
