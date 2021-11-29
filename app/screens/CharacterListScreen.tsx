@@ -1,5 +1,12 @@
-import React, { useContext, useState } from 'react';
-import { FlatList, View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useContext } from 'react';
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from 'react-native';
 import {
   CharacterListItem,
   CharacterListItemDelete,
@@ -16,6 +23,7 @@ const CharacterListScreen = ({
 }: NativeStackScreenProps<RootCharacterParamList, 'CharacterList'>) => {
   const {
     loading,
+    error,
     getCharactersFromService,
     deleteCharacter,
     filteredCharacters,
@@ -24,35 +32,41 @@ const CharacterListScreen = ({
   return (
     <View style={styles.container}>
       <CharacterSearchBar />
-      <View style={styles.listWrapper}>
-        <FlatList
-          data={filteredCharacters}
-          keyExtractor={(item) => item.id.toString()}
-          refreshing={loading}
-          onRefresh={getCharactersFromService}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('CharacterDetails', {
-                  charId: item.id,
-                  charName: item.name,
-                })
-              }
-            >
-              <CharacterListItem
-                title={item.name}
-                subtitle={item.species}
-                imageUri={item.image}
-                renderRightActions={() => (
-                  <CharacterListItemDelete
-                    onPress={() => deleteCharacter(item.id)}
-                  />
-                )}
-              />
-            </TouchableOpacity>
-          )}
-        />
-      </View>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {loading ? (
+        <ActivityIndicator size='large' color={colors.accent} />
+      ) : null}
+      {!error && !loading && (
+        <View style={styles.listWrapper}>
+          <FlatList
+            data={filteredCharacters}
+            keyExtractor={(item) => item.id.toString()}
+            refreshing={loading}
+            onRefresh={getCharactersFromService}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('CharacterDetails', {
+                    charId: item.id,
+                    charName: item.name,
+                  })
+                }
+              >
+                <CharacterListItem
+                  title={item.name}
+                  subtitle={item.species}
+                  imageUri={item.image}
+                  renderRightActions={() => (
+                    <CharacterListItemDelete
+                      onPress={() => deleteCharacter(item.id)}
+                    />
+                  )}
+                />
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
     </View>
   );
 };
@@ -64,7 +78,11 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+  },
+  error: {
+    alignSelf: 'center',
+    fontSize: 20,
+    color: colors.danger,
   },
 });
 

@@ -15,7 +15,7 @@ export const RickAndMortyProvider: FC = ({ children }) => {
   const [episodes, setEpisodes] = useState<IEpisode[]>([]);
   const [filteredEpisodes, setFilteredEpisodes] = useState<IEpisode[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     getCharactersFromService();
@@ -25,30 +25,46 @@ export const RickAndMortyProvider: FC = ({ children }) => {
   // GET all characters from service
   const getCharactersFromService = async () => {
     setLoading(true);
-    const results = await rickAndMortyService.getAllCharacters();
-    setCharacters(results);
-    setFilteredCharacters(results);
+    setError('');
+    try {
+      const results = await rickAndMortyService.getAllCharacters();
+      setCharacters(results);
+      setFilteredCharacters(results);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        setError(`Error: ${error.message}!`);
+      }
+    }
     setLoading(false);
   };
 
   // DELETE a single character from context
   const deleteCharacter = (id: number) => {
-    // setCharacters(characters?.filter((p) => p.id != id));
+    setCharacters(characters?.filter((p) => p.id != id));
     setFilteredCharacters(filteredCharacters?.filter((p) => p.id != id));
   };
 
   // GET all episodes from service
   const getEpisodesFromService = async () => {
     setLoading(true);
-    const results = await rickAndMortyService.getAllEpisodes();
-    setEpisodes(results);
-    setFilteredEpisodes(results);
+    setError('');
+    try {
+      const results = await rickAndMortyService.getAllEpisodes();
+      setEpisodes(results);
+      setFilteredEpisodes(results);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error);
+        setError(`Error: ${error.message}!`);
+      }
+    }
     setLoading(false);
   };
 
   // DELETE a single episode from context
   const deleteEpisode = (id: number) => {
-    // setEpisodes(episodes?.filter((p) => p.id != id));
+    setEpisodes(episodes?.filter((p) => p.id != id));
     setFilteredEpisodes(filteredEpisodes?.filter((p) => p.id != id));
   };
 
@@ -56,6 +72,7 @@ export const RickAndMortyProvider: FC = ({ children }) => {
     <RickAndMortyContext.Provider
       value={{
         loading,
+        error,
         characters,
         getCharactersFromService,
         deleteCharacter,
