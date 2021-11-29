@@ -1,4 +1,4 @@
-import React, { useState, useContext, Dispatch, SetStateAction } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import colors from '../../config/colors';
@@ -6,7 +6,7 @@ import { RickAndMortyContext } from '../../contexts/RickAndMortyContext';
 import { RickAndMortyContextType } from '../../types/RickAndMortyContextType';
 
 const SearchBar = () => {
-  const { characters, loading, setFilteredCharacters } = useContext(
+  const { characters, setFilteredCharacters } = useContext(
     RickAndMortyContext
   ) as RickAndMortyContextType;
 
