@@ -21,7 +21,9 @@ export default function TabNavigator() {
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarBackground: () => (
-          <View style={{ backgroundColor: colors.background }} />
+          <View
+            style={{ backgroundColor: colors.background, height: '100%' }}
+          />
         ),
       }}
     >

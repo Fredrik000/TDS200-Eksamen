@@ -11,20 +11,25 @@ export type RootEpisodeParamList = {
 export default function CharacterNavigator() {
   const Stack = createNativeStackNavigator<RootEpisodeParamList>();
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.background,
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 20,
+          color: colors.primary,
+        },
+        headerTintColor: colors.accent,
+      }}
+    >
       <Stack.Screen
         name='EpisodeList'
         component={EpisodeListScreen}
         options={{
-          title: 'The Rick and Morty App!',
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
-          headerTintColor: colors.primary,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 20,
-          },
+          title: 'Rick and Morty Episodes',
         }}
       />
       <Stack.Screen
@@ -32,9 +37,6 @@ export default function CharacterNavigator() {
         component={EpisodeDetailsScreen}
         options={({ route }) => ({
           title: route.params.epName,
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
         })}
       />
     </Stack.Navigator>

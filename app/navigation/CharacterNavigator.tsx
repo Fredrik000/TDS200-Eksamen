@@ -12,20 +12,25 @@ export default function CharacterNavigator() {
   const Stack = createNativeStackNavigator<RootCharacterParamList>();
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.background,
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          fontSize: 20,
+          color: colors.primary,
+        },
+        headerTintColor: colors.accent,
+      }}
+    >
       <Stack.Screen
         name='CharacterList'
         component={CharacterListScreen}
         options={{
-          title: 'The Rick and Morty App!',
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
-          headerTintColor: colors.primary,
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            fontSize: 20,
-          },
+          title: 'Rick and Morty Characters',
         }}
       />
       <Stack.Screen
@@ -33,9 +38,6 @@ export default function CharacterNavigator() {
         component={CharacterDetailsScreen}
         options={({ route }) => ({
           title: route.params.charName,
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
         })}
       />
     </Stack.Navigator>

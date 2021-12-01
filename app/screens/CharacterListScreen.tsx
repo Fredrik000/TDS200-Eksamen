@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {
   CharacterListItem,
@@ -30,44 +32,46 @@ const CharacterListScreen = ({
   } = useContext(RickAndMortyContext) as RickAndMortyContextType;
 
   return (
-    <View style={styles.container}>
-      <CharacterSearchBar />
-      {error ? <Text style={styles.error}>{error}</Text> : null}
-      {loading ? (
-        <ActivityIndicator size='large' color={colors.accent} />
-      ) : null}
-      {!error && !loading && (
-        <View style={styles.listWrapper}>
-          <FlatList
-            data={filteredCharacters}
-            keyExtractor={(item) => item.id.toString()}
-            refreshing={loading}
-            onRefresh={getCharactersFromService}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('CharacterDetails', {
-                    charId: item.id,
-                    charName: item.name,
-                  })
-                }
-              >
-                <CharacterListItem
-                  title={item.name}
-                  subtitle={item.species}
-                  imageUri={item.image}
-                  renderRightActions={() => (
-                    <CharacterListItemDelete
-                      onPress={() => deleteCharacter(item.id)}
-                    />
-                  )}
-                />
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-      )}
-    </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <CharacterSearchBar />
+        {error ? <Text style={styles.error}>{error}</Text> : null}
+        {loading ? (
+          <ActivityIndicator size='large' color={colors.accent} />
+        ) : null}
+        {!error && !loading && (
+          <View style={styles.listWrapper}>
+            <FlatList
+              data={filteredCharacters}
+              keyExtractor={(item) => item.id.toString()}
+              refreshing={loading}
+              onRefresh={getCharactersFromService}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('CharacterDetails', {
+                      charId: item.id,
+                      charName: item.name,
+                    })
+                  }
+                >
+                  <CharacterListItem
+                    title={item.name}
+                    subtitle={item.species}
+                    imageUri={item.image}
+                    renderRightActions={() => (
+                      <CharacterListItemDelete
+                        onPress={() => deleteCharacter(item.id)}
+                      />
+                    )}
+                  />
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        )}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

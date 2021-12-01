@@ -42,9 +42,14 @@ const CharacterDetailsScreen = ({
         <Text style={styles.information}>Species: {character?.species}</Text>
         <Text style={styles.information}>Gender: {character?.gender}</Text>
       </View>
+
       <View style={styles.buttonContainer}>
-        <Button title='Prev' onPress={() => showNewChar(-1)} />
-        <Button title='Next' onPress={() => showNewChar(1)} />
+        <View style={styles.button}>
+          <Button title='Prev' onPress={() => showNewChar(-1)} />
+        </View>
+        <View style={styles.button}>
+          <Button title='Next' onPress={() => showNewChar(1)} />
+        </View>
       </View>
     </View>
   );
@@ -83,6 +88,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: 10,
+  },
+  button: {
+    margin: 5,
   },
 });
